@@ -1,0 +1,37 @@
+// @flow
+import {snapshot as shipSnapshot} from 'redux-ship';
+import type {Snapshot, t as Ship} from 'redux-ship';
+
+function padTwoDigits(n: number): string {
+  return n < 10 ? '0' + String(n) : String(n);
+}
+
+function isoLocaleTimeString(date: Date): string {
+  return padTwoDigits(date.getHours()) + ':' +
+    padTwoDigits(date.getMinutes()) + ':' +
+    padTwoDigits(date.getSeconds()) + '.' +
+    (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5);
+}
+
+function snapshotShape<Effect, Action, State>(
+  snapshot: Snapshot<Effect, Action, State>
+): string[] {
+  return snapshot.map((snapshotItem) => snapshotItem.type);
+}
+
+export default function* <ControllerAction, Effect, Action, State, A>(
+  action: ControllerAction,
+  ship: Ship<Effect, Action, State, A>
+): Ship<Effect, Action, State, A> {
+  const {result, snapshot} = yield* shipSnapshot(ship);
+  const now = new Date();
+  const type = typeof action === 'object' && action !== null ?
+    action.type :
+    '';
+  console.group('ship', '@', isoLocaleTimeString(now), type);
+  console.log('action', action);
+  console.log('shape', ...snapshotShape(snapshot));
+  console.log('snapshot', snapshot);
+  console.groupEnd();
+  return result;
+}
