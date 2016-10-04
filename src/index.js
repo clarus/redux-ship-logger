@@ -28,7 +28,7 @@ export default function* <ControllerAction, Effect, Action, State, A>(
   const type = typeof action === 'object' && action !== null ?
     action.type :
     '';
-  console.group('%c ship', 'color: black; font-weight: bold', '@', isoLocaleTimeString(now), type);
+  console.group(`%c ship @ ${isoLocaleTimeString(now)} ${String(type)}`, 'color: black; font-weight: bold');
   console.log('%c action', 'color: #03A9F4; font-weight: bold', action);
   console.log('%c shape', 'color: #795DA3; font-weight: bold', ...snapshotShape(snapshot));
   console.log('%c snapshot', 'color: purple; font-weight: bold', snapshot);
