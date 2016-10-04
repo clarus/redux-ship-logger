@@ -28,10 +28,13 @@ export default function* <ControllerAction, Effect, Action, State, A>(
   const type = typeof action === 'object' && action !== null ?
     action.type :
     '';
-  console.group('ship', '@', isoLocaleTimeString(now), type);
-  console.log('action', action);
-  console.log('shape', ...snapshotShape(snapshot));
-  console.log('snapshot', snapshot);
+  console.group('%c ship', 'color: black; font-weight: bold', '@', isoLocaleTimeString(now), type);
+  console.log('%c action', 'color: #03A9F4; font-weight: bold', action);
+  console.log('%c shape', 'color: #795DA3; font-weight: bold', ...snapshotShape(snapshot));
+  console.log('%c snapshot', 'color: purple; font-weight: bold', snapshot);
+  console.groupCollapsed('%c snapshot json', 'color: grey; font-weight: bold');
+  console.log(JSON.stringify(snapshot));
+  console.groupEnd();
   console.groupEnd();
   return result;
 }
