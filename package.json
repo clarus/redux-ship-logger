@@ -24,7 +24,7 @@
     "src"
   ],
   "dependencies": {
-    "redux-ship": "^0.0.6"
+    "redux-ship": "0.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -36,7 +36,7 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-stage-2": "^6.17.0",
     "babylon": "^6.11.4",
-    "eslint": "^3.7.0",
+    "eslint": "^3.7.1",
     "eslint-plugin-babel": "^3.3.0",
     "flow-bin": "^0.33.0",
     "rollup": "^0.36.1",
