@@ -1,6 +1,6 @@
 // @flow
-import {snapshot as shipSnapshot} from 'redux-ship';
-import type {Snapshot, t as Ship} from 'redux-ship';
+import type {Ship, Snapshot} from 'redux-ship';
+import {snap} from 'redux-ship';
 
 function padTwoDigits(n: number): string {
   return n < 10 ? '0' + String(n) : String(n);
@@ -23,7 +23,7 @@ export default function* <ControllerAction, Effect, Action, State, A>(
   action: ControllerAction,
   ship: Ship<Effect, Action, State, A>
 ): Ship<Effect, Action, State, A> {
-  const {result, snapshot} = yield* shipSnapshot(ship);
+  const {result, snapshot} = yield* snap(ship);
   const now = new Date();
   const type = typeof action === 'object' && action !== null ?
     action.type :
