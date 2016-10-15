@@ -13,16 +13,16 @@ function isoLocaleTimeString(date: Date): string {
     (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5);
 }
 
-function snapshotShape<Effect, Action, State>(
-  snapshot: Snapshot<Effect, Action, State>
+function snapshotShape<Effect, Commit, State>(
+  snapshot: Snapshot<Effect, Commit, State>
 ): string[] {
   return snapshot.map((snapshotItem) => snapshotItem.type);
 }
 
-export default function* <ControllerAction, Effect, Action, State, A>(
-  action: ControllerAction,
-  ship: Ship<Effect, Action, State, A>
-): Ship<Effect, Action, State, A> {
+export default function* <Action, Effect, Commit, State, A>(
+  action: Action,
+  ship: Ship<Effect, Commit, State, A>
+): Ship<Effect, Commit, State, A> {
   const {result, snapshot} = yield* snap(ship);
   const now = new Date();
   const type = typeof action === 'object' && action !== null ?
