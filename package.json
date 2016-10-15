@@ -24,7 +24,7 @@
     "src"
   ],
   "dependencies": {
-    "redux-ship": "0.0.11"
+    "redux-ship": "0.0.12"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
