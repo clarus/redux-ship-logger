@@ -13,6 +13,19 @@ function isoLocaleTimeString(date: Date): string {
     (date.getMilliseconds() / 1000).toFixed(3).slice(2, 5);
 }
 
+const colors = {
+  blue: '#03A9F4',
+  green: '#4CAF50',
+  grey: '#9E9E9E',
+  inherit: 'inherit',
+  lightPurle: '#795DA3',
+  purle: '#800080',
+};
+
+function style(color: string): string {
+  return `color: ${color}; font-weight: bold`;
+}
+
 function snapshotShape<Effect, Commit, State>(
   snapshot: Snapshot<Effect, Commit, State>
 ): string[] {
@@ -28,11 +41,11 @@ export default function* <Action, Effect, Commit, State, A>(
   const type = typeof action === 'object' && action !== null ?
     action.type :
     '';
-  console.group(`%c ship @ ${isoLocaleTimeString(now)} ${String(type)}`, 'color: inherit; font-weight: bold');
-  console.log('%c action', 'color: #03A9F4; font-weight: bold', action);
-  console.log('%c shape', 'color: #795DA3; font-weight: bold', ...snapshotShape(snapshot));
-  console.log('%c snapshot', 'color: purple; font-weight: bold', snapshot);
-  console.groupCollapsed('%c snapshot json', 'color: grey; font-weight: bold');
+  console.group(`%c dispatch @ ${isoLocaleTimeString(now)} ${String(type)}`, style(colors.inherit));
+  console.log('%c action', style(colors.blue), action);
+  console.log('%c shape', style(colors.lightPurle), ...snapshotShape(snapshot));
+  console.log('%c snapshot', style(colors.purle), snapshot);
+  console.groupCollapsed('%c snapshot json', style(colors.grey));
   console.log(JSON.stringify(snapshot));
   console.groupEnd();
   console.groupEnd();
