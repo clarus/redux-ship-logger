@@ -67,9 +67,11 @@ export function* logShip<Action, Effect, Commit, State, A>(
   console.log('%c action', style(colors.blue), action);
   console.log('%c shape', style(colors.lightPurle), ...snapshotShape(snapshot));
   console.log('%c snapshot', style(colors.purle), snapshot);
-  console.groupCollapsed('%c snapshot json', style(colors.grey));
-  console.log(JSON.stringify(snapshot));
-  console.groupEnd();
+  {
+    console.groupCollapsed('%c json action snapshot', style(colors.grey));
+    console.log(JSON.stringify({action, snapshot}));
+    console.groupEnd();
+  }
   console.groupEnd();
   return result;
 }
