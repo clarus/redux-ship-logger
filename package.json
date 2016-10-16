@@ -1,6 +1,6 @@
 {
   "name": "redux-ship-logger",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A logger for Redux Ship",
   "main": "dist/index.js",
   "scripts": {
