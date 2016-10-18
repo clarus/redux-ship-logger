@@ -13,7 +13,7 @@ Redux Ship Logger provides two functions, one to log the commits and patches (th
 
 ## API
 * [`logCommit`](#logCommit)
-* [`logShip`](#logShip)
+* [`logControl`](#logControl)
 
 ### `logCommit`
 ```js
@@ -47,30 +47,27 @@ export default createStore(reduce, Model.initialState, applyMiddleware(...middle
 
 ```
 
-### `logShip`
+### `logControl`
 ```js
-<Action, Effect, Commit, State, A>(
-  action: Action,
-  ship: Ship<Effect, Commit, State, A>
-) => Ship<Effect, Commit, State, A>
+<Action, Effect, Commit, State>(
+  control: (action: Action) => Ship<Effect, Commit, State, void>
+) => (action: Action) => Ship<Effect, Commit, State, void>
 ```
 
-Returns a ship with the same behavior as `ship` but logging its snapshots. Also logs a stringified JSON of the snapshot ready to be used in tests with `Ship.simulate`.
+Returns a controller with the same behavior as `control` but logging its snapshots. Also logs a stringified JSON of the snapshot ready to be used in tests with `Ship.simulate`.
+
+* `control` the controller to log
 
 #### Example
 ```js
 // index.js
 import * as Ship from 'redux-ship';
-import {logShip} from 'redux-ship-logger';
+import {logControl} from 'redux-ship-logger';
 import store from './store';
 import * as Controller from './controller';
 import * as Effect from './effect';
 
-function* controlWithLog(action: Controller.Action) {
-  yield* logShip(action, Controller.control(action));
-}
-
 function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store.dispatch, store.getState, controlWithLog(action));
+  Ship.run(Effect.run, store.dispatch, store.getState, logControl(Controller.control)(action));
 }
 ```
