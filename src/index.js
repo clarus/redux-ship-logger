@@ -48,30 +48,30 @@ export function logCommit<Commit, Patch, State>(
   };
 }
 
-function snapshotShape<Effect, Commit, State>(
-  snapshot: Snapshot<Effect, Commit, State>
-): string[] {
+function snapshotShape<Effect, Commit>(snapshot: Snapshot<Effect, Commit>): string[] {
   return snapshot.map((snapshotItem) => snapshotItem.type);
 }
 
-export function* logShip<Action, Effect, Commit, State, A>(
-  action: Action,
-  ship: Ship<Effect, Commit, State, A>
-): Ship<Effect, Commit, State, A> {
-  const {result, snapshot} = yield* snap(ship);
-  const now = new Date();
-  const type = typeof action === 'object' && action !== null ?
-    action.type :
-    '';
-  console.group(`%c ship @ ${isoLocaleTimeString(now)} ${String(type)}`, style(colors.inherit));
-  console.log('%c action', style(colors.blue), action);
-  console.log('%c shape', style(colors.lightPurle), ...snapshotShape(snapshot));
-  console.log('%c snapshot', style(colors.purle), snapshot);
-  {
-    console.groupCollapsed('%c json action snapshot', style(colors.grey));
-    console.log(JSON.stringify({action, snapshot}));
+export function logControl<Action, Effect, Commit, State>(
+  control: (action: Action) => Ship<Effect, Commit, State, void>
+): (action: Action) => Ship<Effect, Commit, State, void> {
+  return function* (action) {
+    const {result, snapshot} = yield* snap(control(action));
+    const now = new Date();
+    const type = typeof action === 'object' && action !== null ?
+      action.type :
+      '';
+    console.group(`%c control @ ${isoLocaleTimeString(now)} ${String(type)}`,
+      style(colors.inherit));
+    console.log('%c action', style(colors.blue), action);
+    console.log('%c shape', style(colors.lightPurle), ...snapshotShape(snapshot));
+    console.log('%c snapshot', style(colors.purle), snapshot);
+    {
+      console.groupCollapsed('%c json action snapshot', style(colors.grey));
+      console.log(JSON.stringify({action, snapshot}));
+      console.groupEnd();
+    }
     console.groupEnd();
-  }
-  console.groupEnd();
-  return result;
+    return result;
+  };
 }
