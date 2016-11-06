@@ -68,6 +68,6 @@ import * as Controller from './controller';
 import * as Effect from './effect';
 
 function dispatch(action: Controller.Action): void {
-  Ship.run(Effect.run, store.dispatch, store.getState, logControl(Controller.control)(action));
+  Ship.run(Effect.run, store, logControl(Controller.control)(action));
 }
 ```
