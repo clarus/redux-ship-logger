@@ -1,17 +1,18 @@
 {
   "env": {
-    "test": {
+    "main": {
       "presets": [
-        "es2015",
-        "stage-2"
+        "es2015"
+      ]
+    },
+    "module": {
+      "presets": [
+        ["es2015", {"modules": false}]
       ]
     }
   },
   "plugins": [
     "syntax-flow",
     "transform-flow-strip-types"
-  ],
-  "presets": [
-    ["es2015", {"modules": false}]
   ]
 }
